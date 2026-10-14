@@ -36,5 +36,7 @@ The server's prompts (`start`, `remix`, `download`, `post`) are each of these fl
 
 - **Nothing goes out without a yes.** `bind_accounts`, `set_schedule` and `post_exports` publish to real accounts. Read back the accounts, days, times and timezone, and wait for an explicit yes before calling them.
 - **The browser is the person's.** Platform sign-ins (`connect_account` hands back a link or a QR code), choosing a plan, and payment all happen in their browser. Pass the link on. Never ask for a password or card.
+- **Ask where they will sign in.** Before `connect_account`, unless the person has already said, ask whether they will sign in on this device (`how: link`, a link to open here) or on their phone (a QR code to scan). TikTok usually wants the phone, since its app holds the account.
+- **A phone gets a QR image.** The text QR `how: qr` returns only scans in a terminal's monospace font. When the person signs in on a phone, render the link as a QR image (any local QR encoder, as a PNG with a white margin) and show it inline in the chat, with the link under it as a fallback. Every link works once and expires in 15 minutes, so start a new `connect_account` if they say it ran out.
 - **When a limit is hit**, for example remixes used up or the trial's posts spent, say so and pass on the link the tool returns.
 - **Video remixes** need footage. When `import_post` says the link is a video, pass on its advice and ask whether the person will upload their own clips or generate them, before making anything.
